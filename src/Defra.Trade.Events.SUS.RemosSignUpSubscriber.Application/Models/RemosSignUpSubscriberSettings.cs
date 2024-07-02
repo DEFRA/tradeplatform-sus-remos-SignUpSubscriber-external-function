@@ -12,7 +12,7 @@ public sealed class RemosSignUpSubscriberSettings
     // In 'Debug' (locally) use connection string
     public const string ConnectionStringConfigurationKey = "Endpoint=https://devtrdinfac1001.azconfig.io;Id=sQZM-l8-s0:uPI644tgUHUr5tdP51Kp;Secret=oNBwRjAPyl5s8SfPFhusHTsFWXgS40BpOz+rTmCndJc=";
 
-    public const string ConnectionStringConfigurationKeySecond = "Endpoint=https://devtrdinfac1001.azconfig.io;Id=sQZM-l8-s0:uPI644tgUHUr5tdP51Kp;Secret=oNBwRjAPyl5s8SfPFhusHTsFWXgS40BpOz+rTmCndJc=";
+    public const string ConnectionStringConfigurationKeySecond = "Endpoint=https://devtrdinfac1002.azconfig.io;Id=sQZM-l8-s0:uPI644tasdasdgUHUr5tdP51Kp;Secret=asdasdasdas+asdasd=";
 
 #else
     // Assumes that this is 'Release' and uses Managed Identity rather than connection string
