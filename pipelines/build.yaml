@@ -30,7 +30,7 @@ resources:
     - repository: PipelineCommon
       name: DEFRA-TRD/Defra.TRD.Pipeline.Common
       type: git
-      ref: master
+      ref: main
   pipelines:
     - pipeline: INFRA
       source: Defra.Trade.API.Infra ReMosSignUpSubscriber
