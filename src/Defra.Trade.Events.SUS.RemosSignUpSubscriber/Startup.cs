@@ -1,6 +1,7 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
 // Licensed under the Open Government License v3.0.
 
+using System.Diagnostics.CodeAnalysis;
 using Defra.Trade.Common.AppConfig;
 using Defra.Trade.Common.Logging.Extensions;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber;
@@ -28,6 +29,7 @@ public sealed class Startup : FunctionsStartup
         builder.ConfigureMapper();
     }
 
+    [ExcludeFromCodeCoverage(Justification = "Little value in testing")]
     public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
     {
         builder.ConfigurationBuilder
