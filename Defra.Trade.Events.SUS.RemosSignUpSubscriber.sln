@@ -12,16 +12,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{
 		pipelines\build.yaml = pipelines\build.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Defra.Trade.Events.SUS.RemosSignUpSubscriber", "src\Defra.Trade.Events.SUS.RemosSignUpSubscriber\Defra.Trade.Events.SUS.RemosSignUpSubscriber.csproj", "{A0E9E499-B538-415D-9D01-6108B624CEFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Defra.Trade.Events.SUS.RemosSignUpSubscriber", "src\Defra.Trade.Events.SUS.RemosSignUpSubscriber\Defra.Trade.Events.SUS.RemosSignUpSubscriber.csproj", "{A0E9E499-B538-415D-9D01-6108B624CEFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application", "src\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.csproj", "{6B4CBB5F-073B-4A18-B055-9433221CAD69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application", "src\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.csproj", "{6B4CBB5F-073B-4A18-B055-9433221CAD69}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{971E3153-C2BB-4AAD-A113-04BA650B281B}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Defra.Trade.Events.SUS.RemosSignUpSubscriber.Tests", "test\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Tests\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Tests.csproj", "{8EBCF468-250C-4609-B9CB-BE9B1FAA0CFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Defra.Trade.Events.SUS.RemosSignUpSubscriber.Tests", "test\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Tests\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Tests.csproj", "{8EBCF468-250C-4609-B9CB-BE9B1FAA0CFC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Tests", "test\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Tests\Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Tests.csproj", "{EFA9BC92-7A6D-435D-8E0C-E60954360B71}"
 EndProject

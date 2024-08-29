@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using AutoMapper;
 using Defra.Trade.Common.Functions.Models;
@@ -10,7 +10,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Services;
 
-public sealed class RemosEstablishmentCreateMessageProcessor : BaseMessageProcessor<Request, MessageHeader, RemosEstablishmentCreateMessageProcessor>
+public sealed class RemosEstablishmentCreateMessageProcessor(
+    ICrmClient client,
+    IMapper mapper,
+    ILogger<RemosEstablishmentCreateMessageProcessor> logger) : BaseMessageProcessor<Request, MessageHeader, RemosEstablishmentCreateMessageProcessor>(client, mapper, logger)
 {
     private static readonly Action<ILogger, Exception?> _logMappingDone = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures succeeded");
     private static readonly Action<ILogger, Exception> _logMappingError = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures failed");
@@ -18,20 +21,9 @@ public sealed class RemosEstablishmentCreateMessageProcessor : BaseMessageProces
     private static readonly Action<ILogger, Exception?> _logSendToDynamicsDone = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics succeeded");
     private static readonly Action<ILogger, Exception> _logSendToDynamicsError = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics failed");
     private static readonly Action<ILogger, Exception?> _logSendToDynamicsStart = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics");
-    private readonly ICrmClient _client;
-    private readonly ILogger<RemosEstablishmentCreateMessageProcessor> _logger;
-    private readonly IMapper _mapper;
-
-    public RemosEstablishmentCreateMessageProcessor(
-        ICrmClient client,
-        IMapper mapper,
-        ILogger<RemosEstablishmentCreateMessageProcessor> logger)
-        : base(client, mapper, logger)
-    {
-        _client = client;
-        _mapper = mapper;
-        _logger = logger;
-    }
+    private readonly ICrmClient _client = client;
+    private readonly ILogger<RemosEstablishmentCreateMessageProcessor> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
     public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
     {

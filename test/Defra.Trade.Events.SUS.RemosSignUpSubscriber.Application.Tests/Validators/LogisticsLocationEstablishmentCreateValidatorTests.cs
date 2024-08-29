@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Inbound;
 using FakeItEasy;
@@ -43,7 +43,7 @@ public sealed class LogisticsLocationEstablishmentCreateValidatorTests : Validat
     {
         // arrange
         var address = new Address();
-        var email = Guid.NewGuid().ToString();
+        string email = Guid.NewGuid().ToString();
 
         var location = new LogisticsLocationEstablishmentCreate()
         {

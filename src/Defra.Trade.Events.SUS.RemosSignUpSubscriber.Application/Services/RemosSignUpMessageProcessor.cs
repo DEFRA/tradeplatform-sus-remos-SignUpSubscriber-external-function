@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using System.Runtime.ExceptionServices;
 using AutoMapper;
@@ -13,7 +13,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Services;
 
-public sealed class RemosSignUpMessageProcessor : BaseMessageProcessor<Request, MessageHeader, RemosSignUpMessageProcessor>
+public sealed class RemosSignUpMessageProcessor(
+    ICrmClient client,
+    IMapper mapper,
+    ILogger<RemosSignUpMessageProcessor> logger) : BaseMessageProcessor<Request, MessageHeader, RemosSignUpMessageProcessor>(client, mapper, logger)
 {
     private static readonly Action<ILogger, Exception?> _logMappingDone = LoggerMessage.Define(LogLevel.Information, default, "Mapping signup inbound messages to dynamics data structures succeeded");
     private static readonly Action<ILogger, Exception> _logMappingError = LoggerMessage.Define(LogLevel.Information, default, "Mapping signup inbound messages to dynamics data structures failed");
@@ -21,20 +24,9 @@ public sealed class RemosSignUpMessageProcessor : BaseMessageProcessor<Request, 
     private static readonly Action<ILogger, Exception?> _logSendToDynamicsDone = LoggerMessage.Define(LogLevel.Information, default, "Sending signup organisation and inspection location to dynamics succeeded");
     private static readonly Action<ILogger, Exception> _logSendToDynamicsError = LoggerMessage.Define(LogLevel.Information, default, "Sending signup organisation and inspection location to dynamics failed");
     private static readonly Action<ILogger, Exception?> _logSendToDynamicsStart = LoggerMessage.Define(LogLevel.Information, default, "Sending signup organisation and inspection location to dynamics");
-    private readonly ICrmClient _client;
-    private readonly ILogger<RemosSignUpMessageProcessor> _logger;
-    private readonly IMapper _mapper;
-
-    public RemosSignUpMessageProcessor(
-        ICrmClient client,
-        IMapper mapper,
-        ILogger<RemosSignUpMessageProcessor> logger)
-        : base(client, mapper, logger)
-    {
-        _client = client;
-        _mapper = mapper;
-        _logger = logger;
-    }
+    private readonly ICrmClient _client = client;
+    private readonly ILogger<RemosSignUpMessageProcessor> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
     public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
     {
