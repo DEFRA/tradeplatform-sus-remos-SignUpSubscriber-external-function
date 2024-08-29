@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using AutoMapper;
 using Defra.Trade.Common.Functions.Models;
@@ -45,7 +45,7 @@ public sealed class RemosUpdateMessageProcessorTests
         var header = new MessageHeader();
 
         // act
-        var result = await _sut.GetSchemaAsync(header);
+        string result = await _sut.GetSchemaAsync(header);
 
         // assert
         result.ShouldBe("");
@@ -94,7 +94,7 @@ public sealed class RemosUpdateMessageProcessorTests
         var header = new MessageHeader();
 
         // act
-        var result = await _sut.ValidateMessageLabelAsync(header);
+        bool result = await _sut.ValidateMessageLabelAsync(header);
 
         // assert
         result.ShouldBe(true);

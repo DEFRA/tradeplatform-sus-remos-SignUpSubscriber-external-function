@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Defra.Trade.Common.AppConfig;
 using Defra.Trade.Common.Logging.Extensions;
@@ -31,7 +31,10 @@ public sealed class Startup : FunctionsStartup
     public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
     {
         builder.ConfigurationBuilder
-           .ConfigureTradeAppConfiguration(true, $"{RemosSignUpSubscriberSettings.RemosSignUpSubscriberSettingsName}:{RemosSignUpSubscriberSettings.AppConfigSentinelName}")
-           .Build();
+            .ConfigureTradeAppConfiguration(config =>
+            {
+                config.UseKeyVaultSecrets = true;
+                config.RefreshKeys.Add($"{RemosSignUpSubscriberSettings.RemosSignUpSubscriberSettingsName}:{RemosSignUpSubscriberSettings.AppConfigSentinelName}");
+            });
     }
 }

@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Azure.Messaging.ServiceBus;
 using Shouldly;
@@ -18,7 +18,7 @@ public sealed class MessageFilterTests
         var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString(), subject: label);
 
         // act
-        var result = MessageFilter.IsEstablishmentCreateMessage(message);
+        bool result = MessageFilter.IsEstablishmentCreateMessage(message);
 
         // assert
         result.ShouldBe(expected);
@@ -33,7 +33,7 @@ public sealed class MessageFilterTests
         var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString(), subject: label);
 
         // act
-        var result = MessageFilter.IsEstablishmentUpdateMessage(message);
+        bool result = MessageFilter.IsEstablishmentUpdateMessage(message);
 
         // assert
         result.ShouldBe(expected);
@@ -48,7 +48,7 @@ public sealed class MessageFilterTests
         var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString(), subject: label);
 
         // act
-        var result = MessageFilter.IsSignUpCreateMessage(message);
+        bool result = MessageFilter.IsSignUpCreateMessage(message);
 
         // assert
         result.ShouldBe(expected);
@@ -63,7 +63,7 @@ public sealed class MessageFilterTests
         var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: Guid.NewGuid().ToString(), subject: label);
 
         // act
-        var result = MessageFilter.IsSignUpUpdateMessage(message);
+        bool result = MessageFilter.IsSignUpUpdateMessage(message);
 
         // assert
         result.ShouldBe(expected);

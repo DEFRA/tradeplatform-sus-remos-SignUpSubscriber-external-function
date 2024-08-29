@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Inbound;
 using Shouldly;
@@ -43,9 +43,9 @@ public sealed class LogisticsLocationEstablishmentUpdateValidatorTests : Validat
     {
         // arrange
         var id = Guid.NewGuid();
-        var inspectionLocationId = Guid.NewGuid().ToString();
-        var status = "Removed";
-        var tradePartyId = Guid.NewGuid().ToString();
+        string inspectionLocationId = Guid.NewGuid().ToString();
+        string status = "Removed";
+        string tradePartyId = Guid.NewGuid().ToString();
 
         var location = new LogisticsLocationEstablishmentUpdate()
         {

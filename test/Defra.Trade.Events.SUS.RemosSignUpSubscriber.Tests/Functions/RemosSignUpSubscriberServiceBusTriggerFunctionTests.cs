@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Azure.Messaging.ServiceBus;
 using Defra.Trade.Common.Functions.Interfaces;
@@ -32,10 +32,10 @@ public sealed class RemosSignUpSubscriberServiceBusTriggerFunctionTests
     public async Task RunAsync_WithKnownLabel_ProcessesMessage(string label)
     {
         // arrange
-        var messageId = Guid.NewGuid().ToString();
+        string messageId = Guid.NewGuid().ToString();
         var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: messageId, subject: label);
         var invocationId = Guid.NewGuid();
-        var functionName = Guid.NewGuid().ToString();
+        string functionName = Guid.NewGuid().ToString();
         var actions = A.Fake<ServiceBusMessageActions>(opt => opt.Strict());
         var context = new ExecutionContext { InvocationId = invocationId, FunctionName = functionName };
         var eventStore = A.Fake<IAsyncCollector<ServiceBusMessage>>(opt => opt.Strict());
@@ -67,10 +67,10 @@ public sealed class RemosSignUpSubscriberServiceBusTriggerFunctionTests
     public async Task RunAsync_WithUnknownLabel_Throws()
     {
         // arrange
-        var messageId = Guid.NewGuid().ToString();
+        string messageId = Guid.NewGuid().ToString();
         var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: messageId, subject: "abcxyz");
         var invocationId = Guid.NewGuid();
-        var functionName = Guid.NewGuid().ToString();
+        string functionName = Guid.NewGuid().ToString();
         var actions = A.Fake<ServiceBusMessageActions>(opt => opt.Strict());
         var context = new ExecutionContext { InvocationId = invocationId, FunctionName = functionName };
         var eventStore = A.Fake<IAsyncCollector<ServiceBusMessage>>(opt => opt.Strict());

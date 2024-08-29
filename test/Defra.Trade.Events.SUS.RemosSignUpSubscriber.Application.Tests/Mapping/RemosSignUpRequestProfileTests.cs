@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using AutoFixture;
 using AutoMapper;
@@ -33,7 +33,7 @@ public sealed class RemosSignUpRequestProfileTests
         // arrange
         var orgId = Guid.NewGuid();
         var contactId = Guid.NewGuid();
-        var email = Guid.NewGuid().ToString();
+        string email = Guid.NewGuid().ToString();
         var expected = _fixture.Build<InspectionLocation>()
             .With(l => l.Id, Guid.Empty)
             .With(l => l.OrganisationId, orgId)

@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Inbound;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Inbound.Establishment.Create;
@@ -41,7 +41,7 @@ public sealed class TradePartyEstablishmentCreateValidatorTests : ValidatorTestB
         // Arrange
         var logisticsLocation = new LogisticsLocation();
         var id = Guid.NewGuid();
-        var orgId = Guid.NewGuid().ToString();
+        string orgId = Guid.NewGuid().ToString();
 
         var establishmentCreate = new TradeParty()
         {

@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using AutoMapper;
 using Defra.Trade.Common.Functions.Interfaces;
@@ -28,7 +28,7 @@ public abstract class BaseMessageProcessor<TRequest, TMessageHeader, TMessagePro
 
     public Task<string> GetSchemaAsync(TMessageHeader messageHeader)
     {
-        return Task.FromResult(string.Empty); // TODO Need schema
+        return Task.FromResult(string.Empty);
     }
 
     public abstract Task<StatusResponse<TRequest>> ProcessAsync(TRequest model, TMessageHeader messageHeader);
