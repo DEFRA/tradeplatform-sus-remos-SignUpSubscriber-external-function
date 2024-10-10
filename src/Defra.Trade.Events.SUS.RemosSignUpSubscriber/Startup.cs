@@ -3,12 +3,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Defra.Trade.Common.AppConfig;
+using Defra.Trade.Common.Function.Health.HealthChecks;
 using Defra.Trade.Common.Logging.Extensions;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application;
+using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Infrastructure;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Models;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Infrastructure;
+using FunctionHealthCheck;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -26,6 +32,9 @@ public sealed class Startup : FunctionsStartup
             .AddApplication()
             .AddFunctionLogging("RemosSignUpSubscriber");
 
+        var healthChecksBuilder = builder.Services.AddFunctionHealthChecks();
+        RegisterHealthChecks(healthChecksBuilder, builder.Services, configuration);
+
         builder.ConfigureMapper();
     }
 
@@ -38,5 +47,20 @@ public sealed class Startup : FunctionsStartup
                 config.UseKeyVaultSecrets = true;
                 config.RefreshKeys.Add($"{RemosSignUpSubscriberSettings.RemosSignUpSubscriberSettingsName}:{RemosSignUpSubscriberSettings.AppConfigSentinelName}");
             });
+    }
+
+    private static void RegisterHealthChecks(
+      IHealthChecksBuilder builder,
+      IServiceCollection services,
+      IConfiguration configuration)
+    {
+        builder.AddCheck<AppSettingHealthCheck>("ServiceBus:ConnectionString")
+            .AddCheck<AppSettingHealthCheck>("ServiceBus:QueueNameEhcoRemosEnrichment");
+
+        var serviceBusQueuesSettings = services.BuildServiceProvider().GetRequiredService<IOptions<ServiceBusQueuesSettings>>();
+       
+
+        builder.AddAzureServiceBusCheck(configuration, "ServiceBus:ConnectionString", serviceBusQueuesSettings.Value.QueueNameEhcoRemosEnrichment);
+        builder.AddAzureServiceBusCheck(configuration, "ServiceBus:ConnectionString", serviceBusQueuesSettings.Value.QueueNameEhcoRemosCreate);
     }
 }
