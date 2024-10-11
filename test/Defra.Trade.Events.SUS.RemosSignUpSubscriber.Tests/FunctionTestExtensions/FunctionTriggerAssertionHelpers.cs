@@ -33,6 +33,6 @@ public static class FunctionTriggerAssertionHelpers
 
     public static MethodInfo GetMethodInfo<TClass>(string methodName)
     {
-        return typeof(TClass).GetMethod(methodName);
+        return typeof(TClass).GetMethod(methodName)!;
     }
 }

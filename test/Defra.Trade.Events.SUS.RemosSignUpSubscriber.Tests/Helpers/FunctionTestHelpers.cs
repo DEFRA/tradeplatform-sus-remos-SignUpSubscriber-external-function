@@ -82,13 +82,13 @@ public static class FunctionTestHelpers
         return new Mock<FunctionContext>();
     }
 
-    public static Mock<HttpRequestData> CreateHttpRequestData(FunctionContext functionContext = null)
+    public static Mock<HttpRequestData> CreateHttpRequestData(FunctionContext? functionContext = null)
     {
         functionContext ??= new Mock<FunctionContext>().Object;
         return new Mock<HttpRequestData>(functionContext);
     }
 
-    public static Mock<HttpResponseData> CreateHttpResponseData(FunctionContext functionContext = null)
+    public static Mock<HttpResponseData> CreateHttpResponseData(FunctionContext? functionContext = null)
     {
         functionContext ??= new Mock<FunctionContext>().Object;
         return new Mock<HttpResponseData>(functionContext);

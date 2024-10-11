@@ -8,9 +8,9 @@ namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.UnitTests.Helpers;
 public class ServiceBusReceivedMessageBuilder
 {
     private readonly Dictionary<string, object> _applicationProperties = [];
-    private BinaryData _body;
+    private BinaryData? _body;
     private string _correlationId = string.Empty;
-    private ServiceBusReceivedMessage _message = null;
+    private ServiceBusReceivedMessage? _message = null;
     private string _messageId = string.Empty;
     private string _subject = string.Empty;
 
