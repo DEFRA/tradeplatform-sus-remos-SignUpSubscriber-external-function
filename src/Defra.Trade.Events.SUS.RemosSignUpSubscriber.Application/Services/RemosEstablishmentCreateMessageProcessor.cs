@@ -22,7 +22,7 @@ public sealed class RemosEstablishmentCreateMessageProcessor(
 
     public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
     {
-        string orgId = messageHeader.OrganisationId ?? Guid.Empty.ToString();
+        string orgId = messageHeader.OrganisationId!;
 
         _logger.EstablishmentCreateProcessorMappingStart(orgId);
         var inspectionLocation = MapToDynamicsModels(messageRequest);
