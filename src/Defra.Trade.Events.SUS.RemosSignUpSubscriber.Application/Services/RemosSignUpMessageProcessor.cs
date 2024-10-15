@@ -25,13 +25,15 @@ public sealed class RemosSignUpMessageProcessor(
 
     public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
     {
-        _logger.SignUpMessageProcessorMappingStart(messageHeader.OrganisationId);
-        var (organisation, inspectionLocations) = MapToDynamicsModels(messageRequest);
-        _logger.SignUpMessageProcessorMappingSuccess(messageHeader.OrganisationId);
+        string orgId = messageHeader.OrganisationId ?? Guid.Empty.ToString();
 
-        _logger.SignUpMessageProcessorSendToDynamicsStart(messageHeader.OrganisationId);
+        _logger.SignUpMessageProcessorMappingStart(orgId);
+        var (organisation, inspectionLocations) = MapToDynamicsModels(messageRequest);
+        _logger.SignUpMessageProcessorMappingSuccess(orgId);
+
+        _logger.SignUpMessageProcessorSendToDynamicsStart(orgId);
         await SendToDynamics(organisation, inspectionLocations);
-        _logger.SignUpMessageProcessorSendToDynamicsSuccess(messageHeader.OrganisationId);
+        _logger.SignUpMessageProcessorSendToDynamicsSuccess(orgId);
 
         return new()
         {

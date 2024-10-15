@@ -19,11 +19,13 @@ namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Services
 
         public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
         {
-            _logger.UpdateMessageProcessorMappingStart(messageHeader.OrganisationId);
-            var organisation = MapToDynamicsModels(messageRequest);
-            _logger.UpdateMessageProcessorMappingSuccess(messageHeader.OrganisationId);
+            string orgId = messageHeader.OrganisationId ?? Guid.Empty.ToString();
 
-            _logger.UpdateMessageProcessorSendToDynamicsStart(messageHeader.OrganisationId);
+            _logger.UpdateMessageProcessorMappingStart(orgId);
+            var organisation = MapToDynamicsModels(messageRequest);
+            _logger.UpdateMessageProcessorMappingSuccess(orgId);
+
+            _logger.UpdateMessageProcessorSendToDynamicsStart(orgId);
 
             try
             {
@@ -31,11 +33,11 @@ namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Services
             }
             catch (Exception ex)
             {
-                _logger.UpdateMessageProcessorSendToDynamicsFailure(ex, messageHeader.OrganisationId);
+                _logger.UpdateMessageProcessorSendToDynamicsFailure(ex, orgId);
                 throw;
             }
 
-            _logger.UpdateMessageProcessorSendToDynamicsSuccess(messageHeader.OrganisationId);
+            _logger.UpdateMessageProcessorSendToDynamicsSuccess(orgId);
 
             return new()
             {

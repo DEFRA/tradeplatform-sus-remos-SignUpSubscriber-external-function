@@ -22,14 +22,16 @@ public sealed class RemosEstablishmentUpdateMessageProcessor(
 
     public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
     {
-        _logger.EstablishmentUpdateProcessorMappingStart(messageHeader.OrganisationId);
+        string orgId = messageHeader.OrganisationId ?? Guid.Empty.ToString();
+
+        _logger.EstablishmentUpdateProcessorMappingStart(orgId);
         var inspectionLocation = MapToDynamicsModels(messageRequest);
 
         inspectionLocation.StatusCode = (int?)StatusCode.Inactive;
         inspectionLocation.StateCode = (int?)StateCode.Inactive;
 
-        _logger.EstablishmentUpdateProcessorMappingSuccess(messageHeader.OrganisationId);
-        _logger.EstablishmentUpdateProcessorSendToDynamicsStart(messageHeader.OrganisationId);
+        _logger.EstablishmentUpdateProcessorMappingSuccess(orgId);
+        _logger.EstablishmentUpdateProcessorSendToDynamicsStart(orgId);
 
         try
         {
@@ -37,11 +39,11 @@ public sealed class RemosEstablishmentUpdateMessageProcessor(
         }
         catch (Exception ex)
         {
-            _logger.EstablishmentUpdateProcessorSendToDynamicsFailure(ex, messageHeader.OrganisationId);
+            _logger.EstablishmentUpdateProcessorSendToDynamicsFailure(ex, orgId);
             throw;
         }
 
-        _logger.EstablishmentUpdateProcessorSendToDynamicsSuccess(messageHeader.OrganisationId);
+        _logger.EstablishmentUpdateProcessorSendToDynamicsSuccess(orgId);
 
         return new()
         {
