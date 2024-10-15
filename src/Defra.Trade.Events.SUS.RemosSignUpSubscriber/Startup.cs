@@ -58,7 +58,7 @@ public sealed class Startup : FunctionsStartup
             .AddCheck<AppSettingHealthCheck>("ServiceBus:QueueNameEhcoRemosEnrichment");
 
         var serviceBusQueuesSettings = services.BuildServiceProvider().GetRequiredService<IOptions<ServiceBusQueuesSettings>>();
-       
+
 
         builder.AddAzureServiceBusCheck(configuration, "ServiceBus:ConnectionString", serviceBusQueuesSettings.Value.QueueNameEhcoRemosEnrichment);
         builder.AddAzureServiceBusCheck(configuration, "ServiceBus:ConnectionString", serviceBusQueuesSettings.Value.QueueNameEhcoRemosCreate);

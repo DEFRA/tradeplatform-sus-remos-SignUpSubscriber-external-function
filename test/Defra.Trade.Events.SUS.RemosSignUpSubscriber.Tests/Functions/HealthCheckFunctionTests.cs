@@ -3,15 +3,15 @@
 
 using System.Text;
 using Defra.Trade.Common.Function.Health;
+using Defra.Trade.Events.SUS.RemosSignUpSubscriber.UnitTests.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Xunit;
 using Moq;
-using Defra.Trade.Events.SUS.RemosSignUpSubscriber.UnitTests.Helpers;
 using Shouldly;
+using Xunit;
 
 namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Functions;
 
