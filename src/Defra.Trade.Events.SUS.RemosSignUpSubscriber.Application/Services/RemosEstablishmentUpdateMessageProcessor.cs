@@ -6,6 +6,7 @@ using Defra.Trade.Common.Functions.Models;
 using Defra.Trade.Crm;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Dynamics;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Inbound.Establishment.Update;
+using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Services;
@@ -15,26 +16,22 @@ public sealed class RemosEstablishmentUpdateMessageProcessor(
     IMapper mapper,
     ILogger<RemosEstablishmentUpdateMessageProcessor> logger) : BaseMessageProcessor<Request, MessageHeader, RemosEstablishmentUpdateMessageProcessor>(client, mapper, logger)
 {
-    private static readonly Action<ILogger, Exception?> _logMappingDone = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures succeeded");
-    private static readonly Action<ILogger, Exception> _logMappingError = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures failed");
-    private static readonly Action<ILogger, Exception?> _logMappingStart = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures");
-    private static readonly Action<ILogger, Exception?> _logSendToDynamicsDone = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics succeeded");
-    private static readonly Action<ILogger, Exception> _logSendToDynamicsError = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics failed");
-    private static readonly Action<ILogger, Exception?> _logSendToDynamicsStart = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics");
     private readonly ICrmClient _client = client;
     private readonly ILogger<RemosEstablishmentUpdateMessageProcessor> _logger = logger;
     private readonly IMapper _mapper = mapper;
 
     public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
     {
-        _logMappingStart(_logger, null);
+        string orgId = messageHeader.OrganisationId!;
+
+        _logger.EstablishmentUpdateProcessorMappingStart(orgId);
         var inspectionLocation = MapToDynamicsModels(messageRequest);
 
         inspectionLocation.StatusCode = (int?)StatusCode.Inactive;
         inspectionLocation.StateCode = (int?)StateCode.Inactive;
 
-        _logMappingDone(_logger, null);
-        _logSendToDynamicsStart(_logger, null);
+        _logger.EstablishmentUpdateProcessorMappingSuccess(orgId);
+        _logger.EstablishmentUpdateProcessorSendToDynamicsStart(orgId);
 
         try
         {
@@ -42,11 +39,11 @@ public sealed class RemosEstablishmentUpdateMessageProcessor(
         }
         catch (Exception ex)
         {
-            _logSendToDynamicsError(_logger, ex);
+            _logger.EstablishmentUpdateProcessorSendToDynamicsFailure(ex, orgId);
             throw;
         }
 
-        _logSendToDynamicsDone(_logger, null);
+        _logger.EstablishmentUpdateProcessorSendToDynamicsSuccess(orgId);
 
         return new()
         {
@@ -63,7 +60,7 @@ public sealed class RemosEstablishmentUpdateMessageProcessor(
         }
         catch (Exception ex)
         {
-            _logMappingError(_logger, ex);
+            _logger.EstablishmentUpdateProcessorMappingFailure(ex);
             throw;
         }
     }

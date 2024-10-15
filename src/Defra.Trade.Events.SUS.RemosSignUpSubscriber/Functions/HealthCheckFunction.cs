@@ -2,12 +2,12 @@
 // Licensed under the Open Government License v3.0.
 
 using System.Threading.Tasks;
+using Defra.Trade.Common.Function.Health.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Defra.Trade.Common.Function.Health.Extensions;
 
 namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Functions;
 
