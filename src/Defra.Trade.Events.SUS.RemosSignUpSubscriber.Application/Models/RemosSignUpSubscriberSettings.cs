@@ -23,7 +23,7 @@ public sealed class RemosSignUpSubscriberSettings
     public const string TradeEventInfo = Common.Functions.Constants.QueueName.DefaultEventsInfoQueueName;
 
     public const string AppConfigSentinelName = "Sentinel";
-#pragma warning disable CA1822 // Mark members as static
-    public string RemosSignUpCreatedQueue => DefaultQueueName;
-#pragma warning restore CA1822 // Mark members as static
+
+    public static string RemosSignUpCreatedQueue => DefaultQueueName;
+
 }
