@@ -5,6 +5,10 @@ namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Models;
 
 public sealed class RemosSignUpSubscriberSettings
 {
+    private RemosSignUpSubscriberSettings()
+    {
+
+    }
 
     public const string RemosSignUpSubscriberSettingsName = "EhcoGcSubscriber";
 #if DEBUG
