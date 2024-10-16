@@ -17,7 +17,12 @@ public class RemosSignUpSubscriberSettingsTests
         // Assert
         RemosSignUpSubscriberSettings.RemosSignUpSubscriberSettingsName.ShouldBe("EhcoGcSubscriber");
 
+#if DEBUG
         RemosSignUpSubscriberSettings.ConnectionStringConfigurationKey.ShouldBe("ServiceBus:ConnectionString");
+#else
+        RemosSignUpSubscriberSettings.ConnectionStringConfigurationKey.ShouldBe("ServiceBus");
+#endif
+
         RemosSignUpSubscriberSettings.DefaultQueueName.ShouldBe("defra.trade.sus.remos.signup");
         RemosSignUpSubscriberSettings.PublisherId.ShouldBe("REMOS");
         RemosSignUpSubscriberSettings.TradeEventInfo.ShouldBe("defra.trade.events.info");
