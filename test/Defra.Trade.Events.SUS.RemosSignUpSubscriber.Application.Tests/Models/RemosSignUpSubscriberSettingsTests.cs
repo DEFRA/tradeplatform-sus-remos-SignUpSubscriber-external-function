@@ -27,7 +27,7 @@ public class RemosSignUpSubscriberSettingsTests
         RemosSignUpSubscriberSettings.PublisherId.ShouldBe("REMOS");
         RemosSignUpSubscriberSettings.TradeEventInfo.ShouldBe("defra.trade.events.info");
         RemosSignUpSubscriberSettings.AppConfigSentinelName.ShouldBe("Sentinel");
-        RemosSignUpSubscriberSettings.RemosSignUpCreatedQueue.ShouldBe("defra.trade.sus.remos.signup");
+        sut.RemosSignUpCreatedQueue.ShouldBe("defra.trade.sus.remos.signup");
     }
 
 }
