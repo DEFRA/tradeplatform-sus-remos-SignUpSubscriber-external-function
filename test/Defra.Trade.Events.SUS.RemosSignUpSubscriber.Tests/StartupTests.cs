@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Functions;
 using FakeItEasy;
@@ -22,7 +22,7 @@ public sealed class StartupTests
     }
 
     [Fact]
-    public void Configure_ResutsInAValidConfiguration()
+    public void Configure_ResultsInAValidConfiguration()
     {
         // arrange
         var context = new WebJobsBuilderContext();

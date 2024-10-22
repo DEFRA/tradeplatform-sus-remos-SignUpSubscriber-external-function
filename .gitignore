@@ -333,3 +333,5 @@ ASALocalRun/
 
 bin/
 obj/
+/src/Defra.Trade.Events.SUS.RemosSignUpSubscriber/local.settings.Designer.cs
+/src/Defra.Trade.Events.SUS.RemosSignUpSubscriber/local.settings.json

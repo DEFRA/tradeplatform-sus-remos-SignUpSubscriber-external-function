@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Inbound;
 using Shouldly;
@@ -48,6 +48,8 @@ public sealed class TradeContactUpdateValidatorTests : ValidatorTestBase<TradeCo
         // Arrange
         var contact = new TradeContactUpdate()
         {
+            Id = Guid.NewGuid(),
+            TradePartyId = Guid.NewGuid(),
             PersonName = Guid.NewGuid().ToString(),
             Position = Guid.NewGuid().ToString(),
             Email = Guid.NewGuid().ToString(),

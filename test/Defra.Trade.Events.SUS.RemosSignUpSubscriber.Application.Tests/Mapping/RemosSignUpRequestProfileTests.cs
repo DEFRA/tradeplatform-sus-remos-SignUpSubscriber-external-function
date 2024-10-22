@@ -1,5 +1,5 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using AutoFixture;
 using AutoMapper;
@@ -33,7 +33,7 @@ public sealed class RemosSignUpRequestProfileTests
         // arrange
         var orgId = Guid.NewGuid();
         var contactId = Guid.NewGuid();
-        var email = Guid.NewGuid().ToString();
+        string email = Guid.NewGuid().ToString();
         var expected = _fixture.Build<InspectionLocation>()
             .With(l => l.Id, Guid.Empty)
             .With(l => l.OrganisationId, orgId)
@@ -55,7 +55,15 @@ public sealed class RemosSignUpRequestProfileTests
                 {
                     RemosEstablishmentSchemeNumber = l.RmsEstablishmentNumber,
                     Name = l.LocationName,
-                    Address = new()
+                    ApprovalStatus = 434800000,
+                    Email = l.ContactEmailAddress,
+                    Id = new Guid?(),
+                    LastModifiedDate =  DateTime.Now,
+                    NI_GBFlag = "test",
+                    CreatedDate = DateTime.Now,
+                    TradeAddressId = new Guid?(),
+                    TradePartyId = new Guid?(),
+                    Address = new Address
                     {
                         LineOne = l.AddressLine1,
                         LineTwo = l.AddressLine2,
@@ -123,6 +131,8 @@ public sealed class RemosSignUpRequestProfileTests
                 },
                 AuthorisedSignatory = new()
                 {
+                    Id = Guid.NewGuid(),
+                    TradePartyId = Guid.NewGuid(),
                     Name = expected.AuthorisedSignatoryName,
                     EmailAddress = expected.AuthorisedSignatoryEmail,
                     Position = expected.AuthorisedSignatoryPosition

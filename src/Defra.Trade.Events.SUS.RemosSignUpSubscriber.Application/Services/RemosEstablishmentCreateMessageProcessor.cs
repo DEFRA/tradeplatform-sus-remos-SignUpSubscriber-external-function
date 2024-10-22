@@ -1,45 +1,34 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using AutoMapper;
 using Defra.Trade.Common.Functions.Models;
 using Defra.Trade.Crm;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Dynamics;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Dtos.Inbound.Establishment.Create;
+using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Services;
 
-public sealed class RemosEstablishmentCreateMessageProcessor : BaseMessageProcessor<Request, MessageHeader, RemosEstablishmentCreateMessageProcessor>
+public sealed class RemosEstablishmentCreateMessageProcessor(
+    ICrmClient client,
+    IMapper mapper,
+    ILogger<RemosEstablishmentCreateMessageProcessor> logger) : BaseMessageProcessor<Request, MessageHeader, RemosEstablishmentCreateMessageProcessor>(client, mapper, logger)
 {
-    private static readonly Action<ILogger, Exception?> _logMappingDone = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures succeeded");
-    private static readonly Action<ILogger, Exception> _logMappingError = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures failed");
-    private static readonly Action<ILogger, Exception?> _logMappingStart = LoggerMessage.Define(LogLevel.Information, default, "Mapping inspection location inbound messages to dynamics data structures");
-    private static readonly Action<ILogger, Exception?> _logSendToDynamicsDone = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics succeeded");
-    private static readonly Action<ILogger, Exception> _logSendToDynamicsError = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics failed");
-    private static readonly Action<ILogger, Exception?> _logSendToDynamicsStart = LoggerMessage.Define(LogLevel.Information, default, "Sending inspection location to dynamics");
-    private readonly ICrmClient _client;
-    private readonly ILogger<RemosEstablishmentCreateMessageProcessor> _logger;
-    private readonly IMapper _mapper;
-
-    public RemosEstablishmentCreateMessageProcessor(
-        ICrmClient client,
-        IMapper mapper,
-        ILogger<RemosEstablishmentCreateMessageProcessor> logger)
-        : base(client, mapper, logger)
-    {
-        _client = client;
-        _mapper = mapper;
-        _logger = logger;
-    }
+    private readonly ICrmClient _client = client;
+    private readonly ILogger<RemosEstablishmentCreateMessageProcessor> _logger = logger;
+    private readonly IMapper _mapper = mapper;
 
     public override async Task<StatusResponse<Request>> ProcessAsync(Request messageRequest, MessageHeader messageHeader)
     {
-        _logMappingStart(_logger, null);
-        var inspectionLocation = MapToDynamicsModels(messageRequest);
-        _logMappingDone(_logger, null);
+        string orgId = messageHeader.OrganisationId!;
 
-        _logSendToDynamicsStart(_logger, null);
+        _logger.EstablishmentCreateProcessorMappingStart(orgId);
+        var inspectionLocation = MapToDynamicsModels(messageRequest);
+        _logger.EstablishmentCreateProcessorMappingSuccess(orgId);
+
+        _logger.EstablishmentCreateProcessorSendToDynamicsStart(orgId);
 
         try
         {
@@ -47,11 +36,11 @@ public sealed class RemosEstablishmentCreateMessageProcessor : BaseMessageProces
         }
         catch (Exception ex)
         {
-            _logSendToDynamicsError(_logger, ex);
+            _logger.EstablishmentCreateProcessorSendToDynamicsFailure(ex, orgId);
             throw;
         }
 
-        _logSendToDynamicsDone(_logger, null);
+        _logger.EstablishmentCreateProcessorSendToDynamicsSuccess(orgId);
 
         return new()
         {
@@ -68,7 +57,7 @@ public sealed class RemosEstablishmentCreateMessageProcessor : BaseMessageProces
         }
         catch (Exception ex)
         {
-            _logMappingError(_logger, ex);
+            _logger.EstablishmentCreateProcessorMappingFailure(ex);
             throw;
         }
     }

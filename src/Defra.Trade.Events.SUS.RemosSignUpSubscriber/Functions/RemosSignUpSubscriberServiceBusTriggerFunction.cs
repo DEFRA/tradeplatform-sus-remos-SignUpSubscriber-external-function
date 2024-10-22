@@ -1,11 +1,12 @@
 ﻿// Copyright DEFRA (c). All rights reserved.
-// Licensed under the Open Government Licence v3.0.
+// Licensed under the Open Government License v3.0.
 
 using System;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
 using Defra.Trade.Common.Functions.Extensions;
 using Defra.Trade.Common.Functions.Interfaces;
+using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Extensions;
 using Defra.Trade.Events.SUS.RemosSignUpSubscriber.Application.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.ServiceBus;
@@ -52,7 +53,7 @@ public sealed class RemosSignUpSubscriberServiceBusTriggerFunction
     {
         try
         {
-            logger.LogInformation("Messages Id : {MessageId} received on {FunctionName}", message.MessageId, executionContext.FunctionName);
+            logger.MessageReceived(message.MessageId, executionContext.FunctionName);
 
             await _messageExecutorFactory
                 .CreateMessageExecutor(message)
